@@ -42,7 +42,7 @@ app.value('companyValue', {
 });
 
 app.value('exitParameters', {
-		months: 48,
+		months: 12,
 		vested: 100
 });
 
@@ -50,8 +50,8 @@ app.value('exitParameters', {
 app.value('fundingRounds', []);
 
 app.value('bigCompanyCompensation', {
-	salary: 100000,
-	interestRate: 5.75
+	salary: 92000,
+	interestRate: 12
 });
 
 app.controller('ExitValueController', ['employeeCompensation', 'companyValue', 'fundingRounds', 'exitParameters',
@@ -84,7 +84,7 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 
 	this.employeeSharesOwnable = function() {
 		return $empComp.sharesOwnable * ($exitParameters.vested / 100);
-	}
+	};
 
 	this.getYourValue = function() {
 	
@@ -160,10 +160,10 @@ app.controller('ExitValueController', ['employeeCompensation', 'companyValue', '
 
 	this.bigCoInterest = function() {
 		var monthlyRateOfReturn = $bigCoComp.interestRate / (12 * 100);
-		var diffPerMonth = ($bigCoComp.salary - $empComp.salary)/12;
+		var diffPerYear = ($bigCoComp.salary - $empComp.salary);
 		var amountCompounded = 0;
 		for(var i = 1; i < $exitParameters.months; i++) {
-			amountCompounded += diffPerMonth + amountCompounded * monthlyRateOfReturn;
+		    amountCompounded += diffPerYear * monthlyRateOfReturn;
 		}
 		return amountCompounded;
 	};
